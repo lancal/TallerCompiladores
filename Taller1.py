@@ -93,7 +93,7 @@ def t_ccomment(t):
 
 #numeros del 00 - 09
 def t_NUM(t):
-    r'[0][0-9]+'
+    r'[0-9]+[0-9]+'
     return t
 
 def t_error(t):
