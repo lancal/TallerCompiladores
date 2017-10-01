@@ -1,5 +1,7 @@
 import ply.lex as lex
 import re
+import codecs
+import os
 
 reservadas = ['ELSE','IF','INT','VOID','RETURN','WHILE']
 
@@ -101,10 +103,55 @@ def t_error(t):
     # Tratamiento de errores.
     t.lexer.skip(1)
 
-lexer = lex.lex()
+def crearArchivo(tok):
+    # C:/Users/harvstr/Documents/comp/TallerCompil/TallerCompiladores/salida
+    tok1 = str(tok)
+    archi = open('Salida.txt', 'a')
+    archi.write(tok1+'\n')
+    archi.close()
+    pass
 
-with open("sample.txt", 'r') as f:
-    contents = f.read()
-    lex.input(contents)
-    for tok in iter(lex.token, None):
-        print repr(tok.type), repr(tok.value)
+def buscarFicheros(directorio):
+    ficheros = []
+    numArchivo = ''
+    respuesta = False
+    cont = 1
+
+    for base, dirs, files in os.walk(directorio):
+        ficheros.append(files)
+
+    for file in files:
+        print(str(cont) + ". " +str(file))
+        cont = cont + 1
+
+    global valorTest
+    while respuesta == False:
+        numArchivo = input('\nNumero del test: ')
+        valorTest = numArchivo
+        for file in files:
+            if file == files[int(numArchivo) - 1]:
+                respuesta = True
+                break
+
+    print("Has escogido \"%s\" \n" % files[int(numArchivo) - 1])
+    return files[int(numArchivo) - 1]
+
+directorio = 'C:/Users/harvstr/Documents/comp/TallerCompil/TallerCompiladores/test/'
+archivo = buscarFicheros(directorio)
+test = directorio + archivo
+fp = codecs.open(test, "r", "utf-8")
+cadena = fp.read()
+fp.close()
+analizador = lex.lex()
+analizador.input(cadena)
+
+while True:
+    tok = analizador.token()
+    if not tok: break
+    crearArchivo(tok)
+    print(tok)
+
+print('\r')
+print("Espacios en blanco: '%s'" % contBK)
+print("Comentarios de una lina: '%s'" % contComment)
+
