@@ -58,7 +58,7 @@ def t_WHILE(t):
     return t
 
 def t_ID(t):
-    r'([a-zA-Z])?([_a-zA-Z0-9])+'
+    r'([a-zA-Z]){1}([_a-zA-Z0-9])+'
     if t.value.upper() in reservadas:
         t.value = t.value.upper()
         t.type = t.value
@@ -79,7 +79,7 @@ def t_blankspace(t):
 # SLCOMMENT es un comentario de UNA linea.
 contComment = 0
 def t_SLCOMMENT(t):
-    r'\%.*'
+    r'\!\?+'
     global contComment
     contComment += 1
     pass
@@ -88,7 +88,8 @@ def t_ccomment(t):
     r'<\/(.|\n)*?\/>'
     t.lexer.lineno += t.value.count('\n')
 
-t_ignore_cppcomment = r'//.*'
+    #return t
+#t_ignore_cppcomment = r'//.*'
 
 #numeros del 00 - 09
 def t_NUM(t):
