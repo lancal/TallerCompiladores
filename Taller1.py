@@ -99,12 +99,10 @@ def t_NUM(t):
     return t
 
 def t_error(t):
-    print("Illegal character '{0}' at line {1}".format(t.value[0], t.lineno))
-    # Tratamiento de errores.
+    print("Caracter Ilegal '%s'" % t.value[0])
     t.lexer.skip(1)
 
 def crearArchivo(tok):
-    # C:/Users/harvstr/Documents/comp/TallerCompil/TallerCompiladores/salida
     tok1 = str(tok)
     archi = open('Salida.txt', 'a')
     archi.write(tok1+'\n')
