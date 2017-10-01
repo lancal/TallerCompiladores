@@ -84,6 +84,12 @@ def t_SLCOMMENT(t):
     contComment += 1
     pass
 
+def t_ccomment(t):
+    r'<\/(.|\n)*?\/>'
+    t.lexer.lineno += t.value.count('\n')
+
+t_ignore_cppcomment = r'//.*'
+
 #numeros del 00 - 09
 def t_NUM(t):
     r'[0][0-9]+'

@@ -4,3 +4,5 @@ WHILE { WhiLe } while wh}ile
 "comparar numeros:" 123.00 .023 123 . 12da3.123
 
 while }
+
+< asdfafs />
