@@ -3,9 +3,9 @@ import re
 import codecs
 import os
 
-reservadas = ['ELSE','IF','INT','VOID','RETURN','WHILE']
+reserved = ['ELSE','IF','INT','VOID','RETURN','WHILE']
 
-tokens = reservadas + ['ID','NUM','PLUS','MINUS','TIMES','DIVIDE','ASSIGN','EQ','NEQ','LT','LEQ','GT','GEQ',
+tokens = reserved + ['ID','NUM','PLUS','MINUS','TIMES','DIVIDE','ASSIGN','EQ','NEQ','LT','LEQ','GT','GEQ',
                        'LPARENT','RPARENT','LBRACKET','RBRACKET','LKEY','RKEY','COMMA','SEMMICOLOM']
 t_ignore = '\t'
 t_PLUS = r'\+'
@@ -61,7 +61,7 @@ def t_WHILE(t):
 
 def t_ID(t):
     r'([a-zA-Z]){1}([_a-zA-Z0-9])+'
-    if t.value.upper() in reservadas:
+    if t.value.upper() in reserved:
         t.value = t.value.upper()
         t.type = t.value
     return t
@@ -109,13 +109,13 @@ def crearArchivo(tok):
     archi.close()
     pass
 
-def buscarFicheros(directorio):
+def findFiles(folder):
     ficheros = []
     numArchivo = ''
     respuesta = False
     cont = 1
 
-    for base, dirs, files in os.walk(directorio):
+    for base, dirs, files in os.walk(folder):
         ficheros.append(files)
 
     for file in files:
@@ -134,9 +134,10 @@ def buscarFicheros(directorio):
     print("Has escogido \"%s\" \n" % files[int(numArchivo) - 1])
     return files[int(numArchivo) - 1]
 
-directorio = 'C:/Users/harvstr/Documents/comp/TallerCompil/TallerCompiladores/test/'
-archivo = buscarFicheros(directorio)
-test = directorio + archivo
+#directorio = '~/Downloads/TallerCompiladores/test/'
+folder = "/Users/alan/Downloads/TallerCompiladores/test/"
+file = findFiles(folder)
+test = folder + file
 fp = codecs.open(test, "r", "utf-8")
 cadena = fp.read()
 fp.close()
