@@ -1,3 +1,16 @@
-Id string
-ID hola
-iD Mundo
+void main(void){
+	int aprueba;
+	int oportunidad;
+	aprueba = 00;
+	oportunidad = 01;
+
+	aprueba = retorna1SiAprueba();
+	while(aprueba == 00){
+		tomarCompiDeNuevo(oportunidad);
+		if(nota >= 04){
+			aprueba = 01;
+		}
+		oportunidad = oportunidad + 01;
+	}
+
+}
