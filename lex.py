@@ -104,7 +104,7 @@ def t_error(t):
 
 def leX(num):
 
-    arch = open("test" + str(num) + ".cm", "r")
+    arch = open("prueba" + str(num) + ".cm", "r")
     code = arch.read()
 
     lexer.input(code)

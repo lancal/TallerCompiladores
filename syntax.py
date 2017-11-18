@@ -340,8 +340,6 @@ from Nodes import *
 from lex import *
 import ply.yacc as yacc
 
-
-
 def p_program(p):
     'program : declaration-list'
     p[0] = programNode()
@@ -716,23 +714,31 @@ def main():
 
     parser = yacc.yacc(debug=True,start='program')
 
-    option = input ("Please give a Option between 1 and 7: ")
+    global path
 
-    if (option == 1 or option == 2 or option == 3
+    option = input ("Please give a Option between 1 and 5: ")
 
-        or option == 4 or option == 5 or option == 6 or option == 7
+    if (option == "1" or option == "2" or option == "3"
 
-        ):
+        or option == "4" or option == "5" ):
 
-        file = open('test' + str(option.argv[1]) + '.cm', 'r')
+        path = "/Users/alan/Downloads/TallerCompiladores/test/prueba" + option + ".cm"
+
+    with open(path, 'r') as file:
+
         s = file.read()
+        print(s)
         lexer.input(s)
+    try:
+        result = parser.parse(s)
+        result.visit()
 
-        try:
-            result = parser.parse(s)
-            result.visit()
-        except AttributeError:
-            print( 'Found it a error in Syntax!')
+    except AttributeError:
+        print("Found it a error in syntax part !")
+
+
+
+
 
 if __name__ == '__main__':
     main()
