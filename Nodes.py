@@ -223,4 +223,45 @@ class emptyNode():
         file.write(str(self.id) + ' [label = "EMPTY"];\n\t')
 
 
+class numNode():
+    def __init__(self, num):
+        self.num = num
+        global id_n
+        self.id_1 = id_n
+        id_n += 1
 
+    def visit(self):
+        global file
+        file.write(str(self.id_1) + ' [label = "NUM value = ' + str(self.num) + '"];\n\t')
+
+
+class assignNode():
+    def __init__(self, var, expression):
+        self.var = var
+        self.expression = expression
+        global id_n
+        self.id_1 = id_n
+        self.id = id_n
+        id_n += 1
+
+    def visit(self):
+        global file
+        file.write(str(self.id) + ' -> ' + str(self.var.id_1) + ';\n\t')
+        file.write(str(self.id) + ' -> ' + str(self.expression.id_1) + ';\n\t')
+        self.expression.visit()
+        self.var.visit()
+        file.write(str(self.id) + ' [label = "ASSIGN"];\n\t')
+
+class callNode():
+    def __init__(self, id, args):
+        self.id = id
+        self.args = args
+        global id_n
+        self.id_1 = id_n
+        id_n += 1
+
+    def visit(self):
+        global file
+        for a in self.args:
+            file.write(str(self.id_1) + ' -> ' + str(a.id_1) + ';\n\t')
+            a.visit()
