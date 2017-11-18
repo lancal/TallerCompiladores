@@ -101,55 +101,31 @@ def t_error(t):
     print("Caracter Ilegal '%s'" % t.value[0])
     t.lexer.skip(1)
 
-def crearArchivo(tok):
-    tok1 = str(tok)
-    archi = open('Salida.txt', 'a')
-    archi.write(tok1+'\n')
-    archi.close()
-    pass
 
-def findFiles(folder):
-    ficheros = []
-    numArchivo = ''
-    respuesta = False
-    cont = 1
+def leX(num):
 
-    for base, dirs, files in os.walk(folder):
-        ficheros.append(files)
+    arch = open("test" + str(num) + ".cm", "r")
+    code = arch.read()
 
-    for file in files:
-        print(str(cont) + ". " +str(file))
-        cont = cont + 1
+    lexer.input(code)
 
-    global valorTest
-    while respuesta == False:
-        numArchivo = input('\nNumero del test: ')
-        valorTest = numArchivo
-        for file in files:
-            if file == files[int(numArchivo) - 1]:
-                respuesta = True
-                break
+    result = open("result" + str(num) + ".txt", "w")
 
-    print("Has escogido \"%s\" \n" % files[int(numArchivo) - 1])
-    return files[int(numArchivo) - 1]
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+        result.write(str(tok) + "\n")
+        print(tok)
 
-#directorio = '~/Downloads/TallerCompiladores/test/'
-folder = "/Users/alan/Downloads/TallerCompiladores/test/"
-file = findFiles(folder)
-test = folder + file
-fp = codecs.open(test, "r", "utf-8")
-cadena = fp.read()
-fp.close()
-analizador = lex.lex()
-analizador.input(cadena)
 
-while True:
-    tok = analizador.token()
-    if not tok: break
-    crearArchivo(tok)
-    print(tok)
+    result.close()
 
-print('\r')
-print("Espacios en blanco: '%s'" % contBK)
-print("Comentarios de una lina: '%s'" % contComment)
+lexer = lex.lex()
 
+def main():
+
+    leX(1)
+
+if __name__ == '__main__':
+    main()
