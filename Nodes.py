@@ -8,13 +8,13 @@ class programNode():
         global id_n
         self.id = id_n
         id_n += 1
-        self.hijos = []
+        self.sons = []
 
     def visit(self):
         global file
-        for hijo in self.hijos:
-            file.write(str(self.id) + ' -> ' + str(hijo.id_1) + ';\n\t')
-            hijo.visit()
+        for son in self.sons:
+            file.write(str(self.id) + ' -> ' + str(son.id_1) + ';\n\t')
+            son.visit()
         file.write(str(self.id) + ' [label = "Program"];\n')
         file.write('}')
 
@@ -192,11 +192,11 @@ class emptyNode():
 
 
 
-class nodoBinOp():
-    def __init__(self, left, right, resultado):
+class opBinaryNode():
+    def __init__(self, left, right, result):
         self.left = left
         self.right = right
-        self.resultado = resultado
+        self.result = result
         global id_n
         self.id_1 = id_n
         id_n += 1
@@ -207,8 +207,20 @@ class nodoBinOp():
         file.write(str(self.id_1) + ' -> ' + str(self.right.id_1) + ';\n\t')
         self.left.visit()
         self.right.visit()
-        file.write(str(self.id_1) + ' [label = "BinOp ' + str(self.resultado) + '"];\n\t')
+        file.write(str(self.id_1) + ' [label = "opBinaryNode ' + str(self.result) + '"];\n\t')
 
+
+class emptyNode():
+    def __init__(self):
+        self.name = 'empty'
+        global id_n
+        self.id_1 = id_n
+        self.id = id_n
+        id_n += 1
+
+    def visit(self):
+        global file
+        file.write(str(self.id) + ' [label = "EMPTY"];\n\t')
 
 
 
