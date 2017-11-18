@@ -1,4 +1,8 @@
-WHILE(){
-ID a_1=01;
-a_1=a_1+01;
+void main(void){
+
+
+    WHILE( aA == bB){
+        aA_01 = 01;
+        aA_01 = aA_01 + 01;
+    }
 }
