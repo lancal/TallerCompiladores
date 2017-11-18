@@ -1,7 +1,6 @@
+#Scanner C-
 import ply.lex as lex
-import re
-import codecs
-import os
+
 
 reserved = ['ELSE','IF','INT','VOID','RETURN','WHILE']
 
