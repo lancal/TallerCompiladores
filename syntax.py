@@ -335,18 +335,21 @@
 #
 # #fin sintaxis
 
+from __future__ import division
+import  ply.yacc as yacc
 import ply.lex as lex
 from Nodes import *
 from lex import *
 import ply.yacc as yacc
+import  sys
 
 def p_program(p):
     'program : declaration-list'
     p[0] = programNode()
     if isinstance(p[1], list):
-        p[0].hijos = p[1]
+        p[0].sons = p[1]
     else:
-        p[0].hijos = [p[1]]
+        p[0].sons = [p[1]]
 
 
 def p_declaration_list_dl(p):
@@ -528,7 +531,7 @@ def p_selection_stmt_else(p):
 
 def p_iteration_stmt(p):
     'iteration-stmt : WHILE LPARENT expression RPARENT statement'
-    p[0] = selection_stmtNode(p[3], p[5])
+    p[0] = iteration_stmtNode(p[3], p[5])
 
 
 def p_return_stmt(p):
@@ -538,12 +541,12 @@ def p_return_stmt(p):
 
 def p_return_expr(p):
     'return-stmt : RETURN expression SEMMICOLOM'
-    p[0] = return_stmtNode(hay_expression=True, expression=p[2])
+    p[0] = return_stmtNode(thereis_expression=True, expression=p[2])
 
 
 def p_expression_var(p):
     'expression : var ASSIGN expression'
-    p[0] = nodoAssign(p[1], p[3])
+    p[0] = assignNode(p[1], p[3])
 
 
 def p_expression_simple(p):
@@ -553,17 +556,17 @@ def p_expression_simple(p):
 
 def p_var(p):
     'var : ID'
-    p[0] = nodoVarVec(p[1])
+    p[0] = varNode(p[1])
 
 
 def p_var_expr(p):
     'var : ID LBRACKET expression RBRACKET'
-    p[0] = nodoVarVec(p[1], is_vec_access=True, expression=p[3])
+    p[0] = varNode(p[1], is_vec_access=True, expression=p[3])
 
 
 def p_simple_expr_relop(p):
     'simple-expression : additive-expression relop additive-expression'
-    p[0] = nodoBinOp(p[1], p[3], resultado=p[2])
+    p[0] = opBinaryNode(p[1], p[3], result=p[2])
 
 
 def p_simple_expr_ae(p):
@@ -604,9 +607,9 @@ def p_relop_noteq(p):
 def p_additive_expression_addop(p):
     'additive-expression : additive-expression addop term'
     if p[2] == '+':
-        p[0] = nodoBinOp(p[1], p[3], '+')
+        p[0] = opBinaryNode(p[1], p[3], '+')
     if p[2] == '-':
-        p[0] = nodoBinOp(p[1], p[3], '-')
+        p[0] = opBinaryNode(p[1], p[3], '-')
 
 
 def p_additive_expression_term(p):
@@ -627,9 +630,9 @@ def p_addop_menos(p):
 def p_term_mulop(p):
     'term : term mulop factor'
     if p[2] == '*':
-        p[0] = nodoBinOp(p[1], p[3], '*')
+        p[0] = opBinaryNode(p[1], p[3], '*')
     if p[2] == '-':
-        p[0] = nodoBinOp(p[1], p[3], '/')
+        p[0] = opBinaryNode(p[1], p[3], '/')
 
 
 def p_term_factor(p):
@@ -664,12 +667,12 @@ def p_factor_call(p):
 
 def p_factor_num(p):
     'factor : NUM'
-    p[0] = nodoNUM(p[1])
+    p[0] = numNode(p[1])
 
 
 def p_call(p):
     'call : ID LPARENT args RPARENT'
-    p[0] = nodoCall(p[1], p[3])
+    p[0] = callNode(p[1], p[3])
 
 
 def p_args(p):
@@ -702,7 +705,7 @@ def p_arg_list_expr(p):
 
 def p_empty(p):
     'empty :'
-    p[0] = nodoEmpty()
+    p[0] = emptyNode()
     pass
 
 
@@ -735,9 +738,6 @@ def main():
 
     except AttributeError:
         print("Found it a error in syntax part !")
-
-
-
 
 
 if __name__ == '__main__':

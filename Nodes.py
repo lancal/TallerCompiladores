@@ -144,8 +144,8 @@ class iteration_stmtNode():
 
 
 class return_stmtNode():
-    def __init__(self, hay_expression = False, expression = None):
-        self.hay_expression = hay_expression
+    def __init__(self, thereis_expression = False, expression = None):
+        self.thereis_expression = thereis_expression
         self.expression = expression
         global id_n
         self.id = id_n
@@ -154,7 +154,7 @@ class return_stmtNode():
 
     def visit(self):
         global file
-        if self.hay_expression:
+        if self.thereis_expression:
             file.write(str(self.id) + ' -> ' + str(self.expression.id_1) + ';\n\t')
             self.expression.visit()
         file.write(str(self.id) + ' [label = "RETURN"];\n\t')
