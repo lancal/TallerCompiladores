@@ -1,0 +1,12 @@
+void main(void){
+
+    if (01 == 01) {
+
+        int aA;
+        int bB;
+
+        aA = 03;
+        bB = 02;
+    }
+
+}
